@@ -19,16 +19,6 @@ def build_model_fn(self):
         if mode == tf.contrib.learn.ModeKeys.EVAL:
             return predictions, loss, None
 
-        non_static_variables = set(
-            tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES))
-        for name, concept in self.concepts.items():
-            if not concept.target:
-                non_static_variables = non_static_variables - set(
-                    tf.get_collection(
-                        tf.GraphKeys.GLOBAL_VARIABLES,
-                        scope=concept.__class__.__name__.lower()))
-        non_static_variables = list(non_static_variables)
-
 
         train_op = tf.contrib.layers.optimize_loss(
             loss=loss,

@@ -52,7 +52,8 @@ gcloud ml-engine local train --package-path trainer \
 ## Deploy your trained model
 To deploy your model to ML Engine
 ```
-TODO
+gcloud ml-engine models create MODEL_NAME
+gcloud ml-engine versions create VERSION --model=MODEL_NAME --origin=ORIGIN
 ```
 To test the deployed model:
 ```
