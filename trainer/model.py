@@ -19,7 +19,6 @@ def build_model_fn(self):
         if mode == tf.contrib.learn.ModeKeys.EVAL:
             return predictions, loss, None
 
-
         train_op = tf.contrib.layers.optimize_loss(
             loss=loss,
             global_step=tf.contrib.framework.get_global_step(),
@@ -33,8 +32,6 @@ def build_model_fn(self):
             ],
             name='train')
 
-        if params["static_concepts"]:
-            return predictions, loss, train_op_static
         else:
             return predictions, loss, train_op
 
