@@ -1,7 +1,44 @@
 #!/usr/bin/python
+import tensorflow as tf
+
+
+def inference(features):
+    """
+    Creates the predictions of the model
+
+        Args:
+          features: A dictionary of tensors keyed by the feature name.
+
+        Returns:
+          A tensor that represents the predictions
+    """
+    with tf.variable_scope('func_classifier') as scope:
+        predictions = tf.layers.dense(inputs=features["feat"],
+                                      units=1, name="dense_weights", use_bias=True)
+    return predictions
+
+
+def loss(predictions, labels):
+    """
+    Function that calculates the loss based on the predictions and labels
+
+        Args:
+          predictions: A tensor representing the predictions (output from)
+          labels: A tensor representing the labels.
+
+        Returns:
+          A tensor representing the loss
+    """
+    with tf.variable_scope('loss') as scope:
+        loss = tf.losses.mean_squared_error(
+            predictions, labels)
+    return loss
+
+
 def build_model_fn(self):
     def _model_fn(features, labels, mode, params):
-        """Creates the prediction and its loss.
+        """
+        Creates the prediction and its loss.
 
         Args:
           features: A dictionary of tensors keyed by the feature name.
@@ -11,11 +48,11 @@ def build_model_fn(self):
         Returns:
           A tuple consisting of the prediction, loss, and train_op.
         """
-        predictions = self.inference(features)
+        predictions = inference(features)
         if mode == tf.contrib.learn.ModeKeys.INFER:
             return predictions, None, None
 
-        loss = self.loss(predictions, labels)
+        loss = loss(predictions, labels)
         if mode == tf.contrib.learn.ModeKeys.EVAL:
             return predictions, loss, None
 
