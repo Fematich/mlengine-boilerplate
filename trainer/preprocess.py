@@ -14,8 +14,8 @@ import tensorflow as tf
 from tensorflow_transform.tf_metadata import dataset_schema
 from tensorflow_transform import coders
 
-from .config import PROJECT_ID, DATA_DIR, OUTPUT_DIR
-from .util import schema
+from config import PROJECT_ID, DATA_DIR, OUTPUT_DIR
+from util import schema
 
 partition_train = Metrics.counter("partition", "train")
 partition_validation = Metrics.counter("partition", "validation")
