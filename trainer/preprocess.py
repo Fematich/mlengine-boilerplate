@@ -1,10 +1,12 @@
 #!/usr/bin/python
 import argparse
+import datetime
 import logging
 import os
+import sys
 
 import apache_beam as beam
-from apache_beam.io import fileio
+from apache_beam.io import filesystem
 from apache_beam.io import tfrecordio
 from apache_beam.metrics import Metrics
 
@@ -12,8 +14,8 @@ import tensorflow as tf
 from tensorflow_transform.tf_metadata import dataset_schema
 from tensorflow_transform import coders
 
-from .config import PROJECT_ID, DATA_DIR, OUTPUT_DIR
-from .util import schema
+from config import PROJECT_ID, DATA_DIR, OUTPUT_DIR
+from util import schema
 
 partition_train = Metrics.counter("partition", "train")
 partition_validation = Metrics.counter("partition", "validation")
@@ -29,21 +31,21 @@ def buildExample(raw_input):
     Returns:
       a dictionary of features
     """
-        try:
-            elements = raw_input.split(',')
-            key = raw_input[0]
-            label = float(raw_input[1])
-            feat = [float(el) for el in raw_input[2:]]
-            features = {
-                'id': key,
-                'label': label
-                'feat': feat,
-            }
-            yield features
-        except Exception as e:
-            examples_failed.inc()
-            logging.error(e, exc_info=True)
-            pass
+    try:
+        elements = raw_input.split(',')
+        key = raw_input[0]
+        label = float(raw_input[1])
+        feat = [float(el) for el in raw_input[2:]]
+        features = {
+            'id': key,
+            'label': label,
+            'feat': feat,
+        }
+        yield features
+    except Exception as e:
+        examples_failed.inc()
+        logging.error(e, exc_info=True)
+        pass
 
 
 def partition_fn(example):
@@ -136,7 +138,7 @@ def main(argv=None):
         _ = examples | part + '_writeExamples' >> tfrecordio.WriteToTFRecord(
             file_path_prefix=os.path.join(
                 known_args.output, part + '_examples'),
-            compression_type=fileio.CompressionTypes.GZIP,
+            compression_type=filesystem.CompressionTypes.GZIP,
             coder=train_coder,
             file_name_suffix='.gz')
 

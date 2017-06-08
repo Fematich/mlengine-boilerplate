@@ -6,8 +6,8 @@ from tensorflow.python.saved_model import builder as saved_model_builder
 from tensorflow.contrib.learn.python.learn.utils import input_fn_utils
 from tensorflow.contrib.layers import create_feature_spec_for_parsing
 
-from .model import model_fn
-from .util import schema
+from model import model_fn
+from util import schema
 
 
 if __name__ == "__main__":
