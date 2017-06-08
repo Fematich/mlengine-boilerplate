@@ -1,7 +1,7 @@
 #!/usr/bin/python
 import tensorflow as tf
 from tensorflow_transform.tf_metadata import dataset_schema
-from .config import DATA_DIR, FEAT_LEN, BATCH_SIZE
+from config import DATA_DIR, FEAT_LEN, BATCH_SIZE
 
 
 def read_data(datadir=DATA_DIR, batch_size=BATCH_SIZE, mode='train'):
