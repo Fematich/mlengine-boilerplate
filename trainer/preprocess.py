@@ -1,7 +1,9 @@
 #!/usr/bin/python
 import argparse
+import datetime
 import logging
 import os
+import sys
 
 import apache_beam as beam
 from apache_beam.io import fileio
@@ -29,21 +31,21 @@ def buildExample(raw_input):
     Returns:
       a dictionary of features
     """
-        try:
-            elements = raw_input.split(',')
-            key = raw_input[0]
-            label = float(raw_input[1])
-            feat = [float(el) for el in raw_input[2:]]
-            features = {
-                'id': key,
-                'label': label
-                'feat': feat,
-            }
-            yield features
-        except Exception as e:
-            examples_failed.inc()
-            logging.error(e, exc_info=True)
-            pass
+    try:
+        elements = raw_input.split(',')
+        key = raw_input[0]
+        label = float(raw_input[1])
+        feat = [float(el) for el in raw_input[2:]]
+        features = {
+            'id': key,
+            'label': label,
+            'feat': feat,
+        }
+        yield features
+    except Exception as e:
+        examples_failed.inc()
+        logging.error(e, exc_info=True)
+        pass
 
 
 def partition_fn(example):
