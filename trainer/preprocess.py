@@ -6,7 +6,7 @@ import os
 import sys
 
 import apache_beam as beam
-from apache_beam.io import fileio
+from apache_beam.io import filesystem
 from apache_beam.io import tfrecordio
 from apache_beam.metrics import Metrics
 
@@ -138,7 +138,7 @@ def main(argv=None):
         _ = examples | part + '_writeExamples' >> tfrecordio.WriteToTFRecord(
             file_path_prefix=os.path.join(
                 known_args.output, part + '_examples'),
-            compression_type=fileio.CompressionTypes.GZIP,
+            compression_type=filesystem.CompressionTypes.GZIP,
             coder=train_coder,
             file_name_suffix='.gz')
 
