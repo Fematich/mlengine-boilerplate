@@ -8,6 +8,7 @@ from tensorflow.contrib.layers import create_feature_spec_for_parsing
 
 from .model import model_fn
 from .util import schema
+from .util import read_data
 
 
 if __name__ == "__main__":
@@ -15,7 +16,7 @@ if __name__ == "__main__":
         model_fn=model_fn,
         model_dir=FLAGS.output_dir,
         params={"learning_rate": 0.001},)
-    estimator.fit(input_fn=read_astro, max_steps=100000)
+    estimator.fit(input_fn=read_data, max_steps=100000)
 
     # Export model
     # (https://github.com/MtDersvan/tf_playground/blob/master/wide_and_deep_tutorial/wide_and_deep_basic_serving.md)

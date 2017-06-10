@@ -22,6 +22,8 @@ Install the following dependencies:
 This boilerplate code is not complete, so you need to complete:
 - preprocess.py pipeline with your own custom preprocess steps
 - model.py with your own model function according to the specification
+- config.py with your project-id and databuckets
+- upload data to your buckets, you can upload data/test.csv to test this code
 - (optionally) task.py with more custom training steps
 
 ## Preprocess
