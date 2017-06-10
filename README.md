@@ -42,8 +42,10 @@ python trainer/preprocess.py
 ## Training Tensorflow model
 You can submit a ML Engine training job with:
 ```
-gcloud ml-engine train --package-path trainer \
-                           --module-name trainer.task
+gcloud ml-engine jobs submit training my_job \
+                --module-name trainer.task \
+                --staging-bucket gs://<stating_bucket> \
+                --package-path trainer
 ```
 Testing it locally:
 ```

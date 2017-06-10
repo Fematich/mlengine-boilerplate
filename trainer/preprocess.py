@@ -107,15 +107,19 @@ def main(argv=None):
             'runner': 'DataflowRunner',
             'job_name': ('mlengine-boilerplate-{}'.format(
                 datetime.datetime.now().strftime('%Y%m%d%H%M%S'))),
+            'staging_location': os.path.join(args.output_dir, 'staging'),
             'temp_location':
                 os.path.join(args.output_dir, 'tmp'),
             'project':
                 args.project_id,
             'zone': 'europe-west1-d',
+            'autoscaling_algorithm': 'THROUGHPUT_BASED',
+            'save_main_session': True,
             'setup_file':
                 './setup.py',
         }
         pipeline_options = beam.pipeline.PipelineOptions(flags=[], **options)
+        print(pipeline_options)
     else:
         pipeline_options = None
 
