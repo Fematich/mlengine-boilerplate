@@ -1,10 +1,10 @@
 #!/usr/bin/python
 import argparse
+import datetime
 import logging
 import os
 import sys
 import datetime
-
 import numpy as np
 
 import apache_beam as beam

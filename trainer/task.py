@@ -6,10 +6,9 @@ from tensorflow.python.saved_model import builder as saved_model_builder
 from tensorflow.contrib.learn.python.learn.utils import input_fn_utils
 from tensorflow.contrib.layers import create_feature_spec_for_parsing
 
-from .model import model_fn
-from .util import schema
-from .util import read_data
-
+from model import model_fn
+from util import schema
+from util import read_data
 
 if __name__ == "__main__":
     estimator = tf.contrib.learn.Estimator(
