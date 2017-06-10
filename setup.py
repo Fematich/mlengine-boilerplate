@@ -10,9 +10,10 @@ setup(
     install_requires=['tensorflow==1.1.0','tensorflow-transform==0.1.10'],
     packages=find_packages(
         exclude=['data', 'predictions']),
-    scripts=['trainer/task.py'],
+    scripts=[],
     package_data={
         'trainer': ['*'],  # include any none python files in trainer
     },
-    description='ML Engine boilerplate code'
+    description='ML Engine boilerplate code',
+    url='https://github.com/Fematich/mlengine-boilerplate'
 )

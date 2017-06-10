@@ -16,7 +16,7 @@ import tensorflow as tf
 from tensorflow_transform.tf_metadata import dataset_schema
 from tensorflow_transform import coders
 
-from config import PROJECT_ID, DATA_DIR, OUTPUT_DIR
+from config import PROJECT_ID, DATA_DIR, TFRECORD_DIR
 from util import schema
 
 partition_train = Metrics.counter('partition', 'train')
@@ -90,7 +90,7 @@ def parse_arguments(argv):
         '--cloud', action='store_true', help='Run preprocessing on the cloud.')
     parser.add_argument(
         '--output_dir',
-        default=OUTPUT_DIR,
+        default=TFRECORD_DIR,
         help=('Google Cloud Storage or Local directory in which '
               'to place outputs.'))
     args, _ = parser.parse_known_args(args=argv[1:])
@@ -113,7 +113,7 @@ def main(argv=None):
                 args.project_id,
             'zone': 'europe-west1-d',
             'setup_file':
-                '../setup.py',
+                './setup.py',
         }
         pipeline_options = beam.pipeline.PipelineOptions(flags=[], **options)
     else:

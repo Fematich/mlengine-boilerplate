@@ -12,10 +12,12 @@ def inference(features):
         Returns:
           A tensor that represents the predictions
     """
-    with tf.variable_scope('func_classifier') as scope:
+    with tf.variable_scope('denselayer') as scope:
+        print(features["feat"].get_shape())
         predictions = tf.layers.dense(inputs=features["feat"],
                                       units=1, name="dense_weights", use_bias=True)
-    return predictions
+        predictions_squeezed = tf.squeeze(predictions)
+    return predictions_squeezed
 
 
 def loss(predictions, labels):
@@ -35,7 +37,7 @@ def loss(predictions, labels):
     return loss
 
 
-def build_model_fn(self):
+def build_model_fn():
     def _model_fn(features, labels, mode, params):
         """
         Creates the prediction and its loss.
@@ -52,12 +54,12 @@ def build_model_fn(self):
         if mode == tf.contrib.learn.ModeKeys.INFER:
             return predictions, None, None
 
-        loss = loss(predictions, labels)
+        loss_op = loss(predictions, labels)
         if mode == tf.contrib.learn.ModeKeys.EVAL:
-            return predictions, loss, None
+            return predictions, loss_op, None
 
         train_op = tf.contrib.layers.optimize_loss(
-            loss=loss,
+            loss=loss_op,
             global_step=tf.contrib.framework.get_global_step(),
             learning_rate=params["learning_rate"],
             optimizer='Adagrad',
@@ -69,7 +71,6 @@ def build_model_fn(self):
             ],
             name='train')
 
-        else:
-            return predictions, loss, train_op
+        return predictions, loss_op, train_op
 
     return _model_fn
