@@ -3,7 +3,6 @@ from googleapiclient import discovery
 
 def get_predictions(project, model, instances, version=None):
     """Send json data to a deployed model for prediction.
-
     Args:
         project (str): project where the Cloud ML Engine Model is deployed.
         model (str): model name.
@@ -16,9 +15,6 @@ def get_predictions(project, model, instances, version=None):
         Mapping[str: any]: dictionary of prediction results defined by the
             model.
     """
-    # Create the ML Engine service object.
-    # To authenticate set the environment variable
-    # GOOGLE_APPLICATION_CREDENTIALS=<path_to_service_account_file>
     service = discovery.build('ml', 'v1')
     name = 'projects/{}/models/{}'.format(project, model)
 
@@ -38,9 +34,8 @@ def get_predictions(project, model, instances, version=None):
 
 if __name__ == "__main__":
     predictions = get_predictions(
-        project="datatonic-gpu",
-        model="test",
-        version="v7",
+        project="project-id",
+        model="modelname",
         instances=[
             {
                 'id': "a12",

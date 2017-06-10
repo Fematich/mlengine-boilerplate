@@ -9,9 +9,9 @@ from config import TFRECORD_DIR, FEAT_LEN, BATCH_SIZE
 
 
 def read_data(datadir=TFRECORD_DIR, batch_size=BATCH_SIZE, mode='train'):
-    """
+    '''
     Creates an input_function for the astrohack data
-    """
+    '''
     def gzip_reader():
         return tf.TFRecordReader(
             options=tf.python_io.TFRecordOptions(

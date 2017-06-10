@@ -8,11 +8,11 @@ from model import build_model_fn
 from util import read_data
 from config import MODEL_DIR, FEAT_LEN
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     estimator = tf.contrib.learn.Estimator(
         model_fn=build_model_fn(),
         model_dir=MODEL_DIR,
-        params={"learning_rate": 0.001},)
+        params={'learning_rate': 0.001},)
     estimator.fit(input_fn=read_data, max_steps=100)
 
     def serving_input_fn():
@@ -30,9 +30,9 @@ if __name__ == "__main__":
         """
 
         feature_placeholders = {
-            'id': tf.placeholder(tf.string, [None], name="id_placeholder"),
-            'feat': tf.placeholder(tf.float32, [None, FEAT_LEN], name="feat_placeholder"),
-            #label is not required since serving is only used for inference
+            'id': tf.placeholder(tf.string, [None], name='id_placeholder'),
+            'feat': tf.placeholder(tf.float32, [None, FEAT_LEN], name='feat_placeholder'),
+            # label is not required since serving is only used for inference
         }
         return input_fn_utils.InputFnOps(
             feature_placeholders,

@@ -3,7 +3,7 @@ import tensorflow as tf
 
 
 def inference(features):
-    """
+    '''
     Creates the predictions of the model
 
         Args:
@@ -11,17 +11,17 @@ def inference(features):
 
         Returns:
           A tensor that represents the predictions
-    """
+    '''
     with tf.variable_scope('denselayer') as scope:
-        print(features["feat"].get_shape())
-        predictions = tf.layers.dense(inputs=features["feat"],
-                                      units=1, name="dense_weights", use_bias=True)
+        print(features['feat'].get_shape())
+        predictions = tf.layers.dense(inputs=features['feat'],
+                                      units=1, name='dense_weights', use_bias=True)
         predictions_squeezed = tf.squeeze(predictions)
     return predictions_squeezed
 
 
 def loss(predictions, labels):
-    """
+    '''
     Function that calculates the loss based on the predictions and labels
 
         Args:
@@ -30,7 +30,7 @@ def loss(predictions, labels):
 
         Returns:
           A tensor representing the loss
-    """
+    '''
     with tf.variable_scope('loss') as scope:
         loss = tf.losses.mean_squared_error(
             predictions, labels)
@@ -39,7 +39,7 @@ def loss(predictions, labels):
 
 def build_model_fn():
     def _model_fn(features, labels, mode, params):
-        """
+        '''
         Creates the prediction and its loss.
 
         Args:
@@ -49,7 +49,7 @@ def build_model_fn():
 
         Returns:
           A tuple consisting of the prediction, loss, and train_op.
-        """
+        '''
         predictions = inference(features)
         if mode == tf.contrib.learn.ModeKeys.INFER:
             return predictions, None, None
@@ -61,13 +61,13 @@ def build_model_fn():
         train_op = tf.contrib.layers.optimize_loss(
             loss=loss_op,
             global_step=tf.contrib.framework.get_global_step(),
-            learning_rate=params["learning_rate"],
+            learning_rate=params['learning_rate'],
             optimizer='Adagrad',
             summaries=[
-                "learning_rate",
-                "loss",
-                "gradients",
-                "gradient_norm",
+                'learning_rate',
+                'loss',
+                'gradients',
+                'gradient_norm',
             ],
             name='train')
 
