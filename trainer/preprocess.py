@@ -136,8 +136,7 @@ def main(argv=None):
 
     for part, examples in example_dict.items():
         _ = examples | part + '_writeExamples' >> tfrecordio.WriteToTFRecord(
-            file_path_prefix=os.path.join(
-                known_args.output, part + '_examples'),
+            file_path_prefix=os.path.join(args.output_dir, part + '_examples'),
             compression_type=filesystem.CompressionTypes.GZIP,
             coder=train_coder,
             file_name_suffix='.gz')
