@@ -1,2 +1,3 @@
 google-api-python-client
 tensorflow==1.1.0
+tensorflow-transform==0.1.10

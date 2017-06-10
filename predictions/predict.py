@@ -37,9 +37,12 @@ def get_predictions(project, model, instances, version=None):
 
 
 if __name__ == "__main__":
-    pred_mass = get_predictions(
+    predictions = get_predictions(
+        project="<project_id>",
+        model="<modelname>",
         instances=[{
             'id': "a12-dlfjl-d"
             'feat': [138, 30, ..., 66],
             "key": 0}]
     )
+    print(predictions)

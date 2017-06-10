@@ -4,6 +4,8 @@ import datetime
 import logging
 import os
 import sys
+import datetime
+import numpy as np
 
 import apache_beam as beam
 from apache_beam.io import filesystem
@@ -17,20 +19,20 @@ from tensorflow_transform import coders
 from config import PROJECT_ID, DATA_DIR, OUTPUT_DIR
 from util import schema
 
-partition_train = Metrics.counter("partition", "train")
-partition_validation = Metrics.counter("partition", "validation")
-partition_test = Metrics.counter("partition", "test")
-examples_failed = Metrics.counter("build", "failed")
+partition_train = Metrics.counter('partition', 'train')
+partition_validation = Metrics.counter('partition', 'validation')
+partition_test = Metrics.counter('partition', 'test')
+examples_failed = Metrics.counter('build', 'failed')
 
 
 def buildExample(raw_input):
-    """
+    '''
     Build a dictionary that contains all the features&label to store as TFRecord
     Args:
       tuple: a tuple containing the data to build the example from
     Returns:
       a dictionary of features
-    """
+    '''
     try:
         elements = raw_input.split(',')
         key = elements[0]
@@ -48,16 +50,17 @@ def buildExample(raw_input):
         pass
 
 
-def partition_fn(example):
-    """
+def partition_fn(example, num_partitions):
+    '''
     Deterministic partition function that partitions examples based on hashing
     Args:
       example: a dictionary with at least one key id
+      num_partitions: number of partitions the function can return
     Returns:
       an integer representing the partition in which the example is put (based on the key id)
-    """
+    '''
     distribution = [90, 7, 3]
-    bucket = hash(str(example["id"])) % np.sum(distribution)
+    bucket = hash(str(example['id'])) % np.sum(distribution)
     if bucket < distribution[0]:
         partition_train.inc()
         return 0
@@ -70,12 +73,12 @@ def partition_fn(example):
 
 
 def parse_arguments(argv):
-    """Parse command line arguments.
+    '''Parse command line arguments.
     Args:
       argv: list of command line arguments including program name.
     Returns:
       The parsed arguments as returned by argparse.ArgumentParser.
-    """
+    '''
     parser = argparse.ArgumentParser(
         description='Runs Preprocessing.')
 
@@ -96,25 +99,24 @@ def parse_arguments(argv):
 
 
 def main(argv=None):
-    """Run Preprocessing as a Dataflow pipeline."""
+    '''Run Preprocessing as a Dataflow pipeline.'''
     args = parse_arguments(sys.argv if argv is None else argv)
     if args.cloud:
-        pipeline_name = 'DataflowRunner'
+        logging.info('Start running in the cloud')
         options = {
+            'runner': 'DataflowRunner',
             'job_name': ('mlengine-boilerplate-{}'.format(
                 datetime.datetime.now().strftime('%Y%m%d%H%M%S'))),
             'temp_location':
                 os.path.join(args.output_dir, 'tmp'),
             'project':
                 args.project_id,
+            'zone': 'europe-west1-d',
             'setup_file':
-                os.path.abspath(os.path.join(
-                    os.path.dirname(__file__),
-                    'setup.py')),
+                '../setup.py',
         }
         pipeline_options = beam.pipeline.PipelineOptions(flags=[], **options)
     else:
-        pipeline_name = 'DirectRunner'
         pipeline_options = None
 
     train_coder = coders.ExampleProtoCoder(schema)
@@ -123,20 +125,21 @@ def main(argv=None):
 
     examples = (p
                 | 'ReadData' >> beam.io.ReadFromText(
-                    DATA_DIR, skip_header_lines=1)
+                    DATA_DIR + '/*', skip_header_lines=1)
                 | 'buildExamples' >> beam.FlatMap(lambda raw_input: buildExample(raw_input)))
 
     examples_split = examples | beam.Partition(
         partition_fn, 3)
     example_dict = {
-        "train": examples_split[0],
-        "validation": examples_split[1],
-        "test": examples_split[2]
+        'train': examples_split[0],
+        'validation': examples_split[1],
+        'test': examples_split[2]
     }
 
     for part, examples in example_dict.items():
         _ = examples | part + '_writeExamples' >> tfrecordio.WriteToTFRecord(
-            file_path_prefix=os.path.join(args.output_dir, part + '_examples'),
+            file_path_prefix=os.path.join(
+                args.output_dir, part + '_examples'),
             compression_type=filesystem.CompressionTypes.GZIP,
             coder=train_coder,
             file_name_suffix='.gz')
