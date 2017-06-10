@@ -33,9 +33,9 @@ def buildExample(raw_input):
     """
     try:
         elements = raw_input.split(',')
-        key = raw_input[0]
-        label = float(raw_input[1])
-        feat = [float(el) for el in raw_input[2:]]
+        key = elements[0]
+        label = float(elements[1])
+        feat = [float(el) for el in elements[2:]]
         features = {
             'id': key,
             'label': label,
