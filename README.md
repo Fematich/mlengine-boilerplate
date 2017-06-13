@@ -1,13 +1,13 @@
-MLEngine-Boilerplate [WIP]
-==========================
+MLEngine-Boilerplate
+====================
 
 This repository is designed to quickly get you started with new Machine Learning projects on Google Cloud Platform.
 
 ### Functionalities
 
-The project is work in progress and the current boilerplate code has functionalities:
+The project is still under development, current functionalities:
 - preprocessing pipeline (with Apache Beam) that runs on Cloud Dataflow or locally
-- model training (with Tensorflow) that runs locally or on ML Engine with Hypertune
+- model training (with Tensorflow) that runs locally or on ML Engine
 - ready to deploy saved models to deploy on ML Engine
 - starter code to use the saved model on ML Engine
 
@@ -19,7 +19,7 @@ Install the following dependencies:
 
 # Getting started
 
-This boilerplate code is not complete, so you need to complete:
+You need to complete the following parts to run the code:
 - preprocess.py pipeline with your own custom preprocess steps
 - model.py with your own model function according to the specification
 - config.py with your project-id and databuckets
