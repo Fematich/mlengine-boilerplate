@@ -45,32 +45,44 @@ def build_model_fn():
         Args:
           features: A dictionary of tensors keyed by the feature name.
           labels: A tensor representing the labels.
-          mode: The execution mode, defined in tf.contrib.learn.ModeKeys.
+          mode: The execution mode, defined in tf.estimator.ModeKeys.
 
         Returns:
-          A tuple consisting of the prediction, loss, and train_op.
+          A tf.estimator.EstimatorSpec object containing mode,
+          predictions, loss, train_op and export_outputs.
         '''
         predictions = inference(features)
-        if mode == tf.contrib.learn.ModeKeys.INFER:
-            return predictions, None, None
+        loss_op = None
+        train_op = None
+        
+        if mode != tf.estimator.ModeKeys.PREDICT:
+            loss_op = loss(predictions, labels)
 
-        loss_op = loss(predictions, labels)
-        if mode == tf.contrib.learn.ModeKeys.EVAL:
-            return predictions, loss_op, None
+        if mode == tf.estimator.ModeKeys.TRAIN:
+            train_op = tf.contrib.layers.optimize_loss(
+                loss=loss_op,
+                global_step=tf.contrib.framework.get_global_step(),
+                learning_rate=params['learning_rate'],
+                optimizer='Adagrad',
+                summaries=[
+                    'learning_rate',
+                    'loss',
+                    'gradients',
+                    'gradient_norm',
+                ],
+                name='train')
 
-        train_op = tf.contrib.layers.optimize_loss(
-            loss=loss_op,
-            global_step=tf.contrib.framework.get_global_step(),
-            learning_rate=params['learning_rate'],
-            optimizer='Adagrad',
-            summaries=[
-                'learning_rate',
-                'loss',
-                'gradients',
-                'gradient_norm',
-            ],
-            name='train')
+        predictions_dict = {"predictions": predictions}
+        export_outputs = {
+            tf.saved_model.signature_constants.DEFAULT_SERVING_SIGNATURE_DEF_KEY: 
+                tf.estimator.export.PredictOutput(predictions_dict)}
 
-        return predictions, loss_op, train_op
+
+        return tf.estimator.EstimatorSpec(
+            mode=mode,
+            predictions=predictions_dict,
+            loss=loss_op, 
+            train_op=train_op,
+            export_outputs=export_outputs)
 
     return _model_fn
