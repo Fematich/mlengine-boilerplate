@@ -59,7 +59,7 @@ def partition_fn(example, num_partitions):
     Returns:
       an integer representing the partition in which the example is put (based on the key id)
     '''
-    distribution = [90, 7, 3]
+    distribution = [80, 10, 10]
     bucket = hash(str(example['id'])) % np.sum(distribution)
     if bucket < distribution[0]:
         partition_train.inc()

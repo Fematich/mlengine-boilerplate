@@ -12,6 +12,7 @@ The project is still under development, current functionalities:
 - starter code to use the saved model on ML Engine
 
 ### Install dependencies
+**Note** You will need a Linux or Mac environment with Python 2.7.x to install the dependencies [1].
 Install the following dependencies:
  * Install [Cloud SDK](https://cloud.google.com/sdk/)
  * Install [gcloud](https://cloud.google.com/sdk/gcloud/)
@@ -68,3 +69,5 @@ python predictions/predict.py
 We are working to add the following functionalities ASAP:
 - tensorflow-transform
 - hypertune
+
+[1] MLEngine-Boilerplate requires both Tensorflow as Apache Beam and currently Tensorflow on Windows only supports Python 3.5.x
