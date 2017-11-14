@@ -2,6 +2,7 @@ MLEngine-Boilerplate
 ====================
 
 This repository is designed to quickly get you started with new Machine Learning projects on Google Cloud Platform.
+Slides: https://bit.ly/mlwithgcp
 
 ### Functionalities
 
@@ -66,8 +67,8 @@ python predictions/predict.py
 ```
 
 # ToDos
-We are working to add the following functionalities ASAP:
-- tensorflow-transform
+We are working to add the following functionalities:
 - hypertune
+- tensorflow-transform
 
 [1] MLEngine-Boilerplate requires both Tensorflow as Apache Beam and currently Tensorflow on Windows only supports Python 3.5.x
