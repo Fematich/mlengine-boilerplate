@@ -32,7 +32,7 @@ You need to complete the following parts to run the code:
 
 You can run preprocess.py in the cloud using:
 ```
-python trainer/preprocess.py --cloud
+python preprocess.py --cloud
       
 ```
 
