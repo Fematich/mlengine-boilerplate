@@ -5,8 +5,6 @@ This repository is designed to quickly get you started with new Machine Learning
 Slides: https://bit.ly/mlwithgcp
 
 ### Functionalities
-
-The project is still under development, current functionalities:
 - preprocessing pipeline (with Apache Beam) that runs on Cloud Dataflow or locally
 - model training (with Tensorflow) that runs locally or on ML Engine
 - ready to deploy saved models to deploy on ML Engine
