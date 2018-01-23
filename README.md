@@ -38,7 +38,7 @@ python preprocess.py --cloud
 
 To improve efficiency you can also run the code locally on a sample of the dataset:
 ```
-python trainer/preprocess.py
+python preprocess.py
 ```
 
 ## Training Tensorflow model
@@ -58,12 +58,12 @@ gcloud ml-engine local train --package-path trainer \
 ## Deploy your trained model
 To deploy your model to ML Engine
 ```
-gcloud ml-engine models create MODEL_NAME
-gcloud ml-engine versions create VERSION --model=MODEL_NAME --origin=ORIGIN
+gcloud ml-engine models create flowers
+gcloud ml-engine versions create VERSION --model=flowers --origin=ORIGIN
 ```
 To test the deployed model:
 ```
-python predictions/predict.py
+python predict.py
 ```
 
 # ToDos

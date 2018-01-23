@@ -106,6 +106,44 @@ def parse_arguments(argv):
 
     return args
 
+def select_files(input_line):
+    """Reads csv input lines and splits a line in uri and label
+
+    Args:
+        inputline (str): line in %s,%s format from csv file
+
+    Returns:
+       uri, label
+
+    """
+    #TODO implement function 
+    
+def one_hot_encoding((uri, label), all_labels):
+    """Transforms label into one hot encoding array
+
+    Args:
+        uri, label ((str,str))
+        all_labels: array of all labels
+
+    Returns:
+       uri, labels
+
+    """
+    #TODO implement function 
+
+def process_image((uri, label)):
+    """Reads an image at specified uri and transforms it into pixel values
+    uses read_image from util
+
+    Args:
+        uri, label ((str,str))
+
+    Returns:
+       uri, label, image_bytes
+
+    """
+    #TODO implement function (uses read_image from util)
+
 
 def get_cloud_pipeline_options(project, output_dir):
     """Get apache beam pipeline options to run with Dataflow on the cloud
@@ -154,6 +192,11 @@ def main(argv=None):
 
     pipeline = beam.Pipeline(options=pipeline_options)
 
+    all_labels = (pipeline | 'ReadDictionary' >> beam.io.ReadFromText(
+        DATA_DIR + 'dict.txt', strip_trailing_newlines=True))
+
+     # TODO: adapt pipeline to use new functions defined above
+     # use all_labels (array of all possible labels as sideinput in the pipeline)
     examples = (pipeline
                 # | 'ReadData' >> beam.Create(open('data/test.csv')
                 #                             .readlines()[1:])
