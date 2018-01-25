@@ -8,7 +8,9 @@ setup(
     author='Matthias Feys',
     author_email='matthiasfeys@gmail.com',
     install_requires=['tensorflow==1.4.0',
-                      'tensorflow-transform==0.4.0'],
+                      'tensorflow-transform==0.4.0',
+                       'Pillow==5.0.0', 
+                       'numpy==1.14.0'],
     packages=find_packages(exclude=['data', 'predictions']),
     description='ML Engine boilerplate code',
     url='https://github.com/Fematich/mlengine-boilerplate'

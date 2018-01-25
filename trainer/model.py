@@ -12,6 +12,8 @@ def inference(features):
             A tensor that represents the predictions
 
     """
+    # TODO implement model with input: features['feat'] and output: 5 labels (one hot encoding)
+    # use tf.layers.dense, tf.nn.relu (if you use multiple layers) and softmax for the final layer
     with tf.variable_scope('denselayer'):
         print(features['feat'].get_shape())
         predictions = tf.layers.dense(inputs=features['feat'],
@@ -34,7 +36,7 @@ def loss(predictions, labels):
 
     """
     with tf.variable_scope('loss'):
-        return tf.losses.mean_squared_error(predictions, labels)
+        return tf.losses.mean_squared_error(labels, predictions)
 
 
 def build_model_fn():
@@ -44,7 +46,6 @@ def build_model_fn():
         function: model function
 
     """
-
     def _model_fn(features, labels, mode, params):
         """Creates the prediction and its loss.
 
@@ -61,14 +62,14 @@ def build_model_fn():
         predictions = inference(features)
         loss_op = None
         train_op = None
-
+        
         if mode != tf.estimator.ModeKeys.PREDICT:
             loss_op = loss(predictions, labels)
 
         if mode == tf.estimator.ModeKeys.TRAIN:
             train_op = tf.contrib.layers.optimize_loss(
                 loss=loss_op,
-                global_step=tf.contrib.framework.get_global_step(),
+                global_step=tf.train.get_global_step(),
                 learning_rate=params['learning_rate'],
                 optimizer='Adagrad',
                 summaries=[
@@ -81,13 +82,14 @@ def build_model_fn():
 
         predictions_dict = {"predictions": predictions}
         export_outputs = {
-            tf.saved_model.signature_constants.DEFAULT_SERVING_SIGNATURE_DEF_KEY:
+            tf.saved_model.signature_constants.DEFAULT_SERVING_SIGNATURE_DEF_KEY: 
                 tf.estimator.export.PredictOutput(predictions_dict)}
+
 
         return tf.estimator.EstimatorSpec(
             mode=mode,
             predictions=predictions_dict,
-            loss=loss_op,
+            loss=loss_op, 
             train_op=train_op,
             export_outputs=export_outputs)
 

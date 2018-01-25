@@ -7,7 +7,7 @@ import numpy as np
 import tensorflow as tf
 from tensorflow.python.lib.io.tf_record import TFRecordCompressionType
 from tensorflow_transform.tf_metadata import dataset_schema
-from trainer.config import TFRECORD_DIR, FEAT_LEN, BATCH_SIZE, WIDTH, HEIGHT, NUM_LABELS
+from config import TFRECORD_DIR, FEAT_LEN, NUM_LABELS, BATCH_SIZE, WIDTH, HEIGHT
 
 from tensorflow.python.framework import errors
 from tensorflow.python.lib.io import file_io
@@ -39,16 +39,20 @@ def build_input_fn(mode='train'):
             return tf.TFRecordReader(
                 options=tf.python_io.TFRecordOptions(
                     compression_type=TFRecordCompressionType.GZIP))
+            
+        # print('file pattern: '+data_dir+ mode + '*')
 
-        features = tf.contrib.learn.io.read_batch_features(
+        features = tf.contrib.learn.read_batch_features(
             file_pattern=os.path.join(data_dir, mode + '*'),
             batch_size=batch_size,
             reader=gzip_reader,
             features={
                 'id': tf.FixedLenFeature([], tf.string),
-                'label': tf.FixedLenFeature([], tf.float32),
+                'label': tf.FixedLenFeature([NUM_LABELS], tf.int64),
                 'feat': tf.FixedLenFeature([FEAT_LEN], tf.float32),
             })
+
+        # print(type(features))
 
         label = features.pop('label')
         return features, label

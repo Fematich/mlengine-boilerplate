@@ -3,7 +3,7 @@
 PROJECT_ID = 'project-id'
 BUCKET = 'gs://bucket/'
 
-DATA_DIR = 'gs://gdg-ml-at-scaledata/'
+DATA_DIR = 'gs://gdg-ml-at-scale/data/'
 TFRECORD_DIR = BUCKET + 'tfrecords/'
 MODEL_DIR = BUCKET + 'model/'
 MODEL_NAME = 'flowers'

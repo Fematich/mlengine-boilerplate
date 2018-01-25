@@ -39,7 +39,7 @@ if __name__ == "__main__":
     # TODO change get_predictions to test your model
     # use read_image for uri: "gs://cloud-ml-data/img/flower_photos/dandelion/2473862606_291ae74885.jpg"
     predictions = get_predictions(
-        project="ml6-sandbox",
+        project="project-id",
         model="mlengine_boilerplate",
         instances=[
             {

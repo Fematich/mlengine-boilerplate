@@ -106,7 +106,7 @@ def parse_arguments(argv):
 
     return args
 
-def select_files(input_line):
+def split_line(input_line):
     """Reads csv input lines and splits a line in uri and label
 
     Args:
@@ -139,7 +139,7 @@ def process_image((uri, label)):
         uri, label ((str,str))
 
     Returns:
-       uri, label, image_bytes
+       uri, label, pixel_values
 
     """
     #TODO implement function (uses read_image from util)

@@ -3,7 +3,7 @@ import tensorflow as tf
 
 import util
 from model import build_model_fn
-from trainer.config import MODEL_DIR, FEAT_LEN
+from config import MODEL_DIR, FEAT_LEN
 
 if __name__ == '__main__':
     estimator = tf.estimator.Estimator(
@@ -11,7 +11,7 @@ if __name__ == '__main__':
         model_dir=MODEL_DIR,
         params={'learning_rate': 0.001})
 
-    train_spec = tf.estimator.TrainSpec(input_fn=util.build_input_fn(), max_steps=100)
+    train_spec = tf.estimator.TrainSpec(input_fn=util.build_input_fn(), max_steps=5000)
     eval_spec = tf.estimator.EvalSpec(input_fn=util.build_input_fn(mode='test'), steps=300)
 
     tf.estimator.train_and_evaluate(estimator, train_spec, eval_spec)
@@ -22,7 +22,7 @@ if __name__ == '__main__':
                                name='feat_placeholder'),
         # label is not required since serving is only used for inference
     }
-
+    
     serving_input_fn = tf.estimator.export.build_raw_serving_input_receiver_fn(
         feature_placeholders)
 
