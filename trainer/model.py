@@ -1,5 +1,6 @@
 #!/usr/bin/python
 import tensorflow as tf
+from config import NUM_LABELS
 
 
 def inference(features):
@@ -12,16 +13,42 @@ def inference(features):
             A tensor that represents the predictions
 
     """
-    # TODO implement model with input: features['feat'] and output: 5 labels (one hot encoding)
-    # use tf.layers.dense, tf.nn.relu (if you use multiple layers) and softmax for the final layer
+    # five layers and their number of neurons (the last layer has NUM_LABELS softmax neurons)
+    L = 1000
+    M = 300
+    N = 150
+    O = 30
+
     with tf.variable_scope('denselayer'):
-        print(features['feat'].get_shape())
-        predictions = tf.layers.dense(inputs=features['feat'],
-                                      units=1,
-                                      name='dense_weights',
+        # print(type(features['feat']))
+        # print(features['feat'].get_shape())
+        layer1 = tf.layers.dense(inputs=features['feat'],
+                                      units=L,
+                                      name='layer1',
                                       use_bias=True)
-        predictions_squeezed = tf.squeeze(predictions)
-    return predictions_squeezed
+        relu_layer1 = tf.nn.relu(layer1)
+        layer2 = tf.layers.dense(inputs=relu_layer1,
+                                      units=M,
+                                      name='layer2',
+                                      use_bias=True)
+        relu_layer2= tf.nn.relu(layer2)
+        layer3 = tf.layers.dense(inputs=relu_layer2,
+                                      units=N,
+                                      name='layer3',
+                                      use_bias=True)
+        relu_layer3 = tf.nn.relu(layer3)
+        layer4 = tf.layers.dense(inputs=relu_layer3,
+                                      units=O,
+                                      name='layer4',
+                                      use_bias=True)
+        relu_layer4 = tf.nn.relu(layer4)
+        layer5 = tf.layers.dense(inputs=relu_layer4,
+                                      units=NUM_LABELS,
+                                      name='layer5',
+                                      use_bias=True)
+        predictions = tf.nn.softmax(layer5)
+
+    return predictions
 
 
 def loss(predictions, labels):

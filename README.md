@@ -4,6 +4,10 @@ MLEngine-Boilerplate
 This repository is designed to quickly get you started with new Machine Learning projects on Google Cloud Platform.
 Slides: https://bit.ly/mlwithgcp
 
+## Example: classification of flower images
+
+This example adapted the boilerplate to perform classification of flower images. The major changes in the code consist of (1) reading images and transforming them into pixels as input value, (2) transforming the lables into one hot encoded vectors and (3) changing the ml model to predict the one hot encoded vector (using softmax to output multiple numbers that sum to 1).
+
 ### Functionalities
 
 The project is still under development, current functionalities:
@@ -22,10 +26,8 @@ Install the following dependencies:
 # Getting started
 
 You need to complete the following parts to run the code:
-- preprocess.py pipeline with your own custom preprocess steps
-- model.py with your own model function according to the specification
 - config.py with your project-id and databuckets
-- upload data to your buckets, you can upload data/test.csv to test this code
+- upload data to your buckets, you can upload data/flowers.csv and data/dict.txt to test this code
 - (optionally) task.py with more custom training steps
 
 ## Preprocess
@@ -46,7 +48,7 @@ You can submit a ML Engine training job with:
 ```
 gcloud ml-engine jobs submit training flowers_job \
                 --module-name trainer.task \
-                --staging-bucket gs://<staging_bucket> \
+                --staging-bucket gs://gdg-ml-at-scale \
                 --package-path trainer
 ```
 Testing it locally:
@@ -59,7 +61,7 @@ gcloud ml-engine local train --package-path trainer \
 To deploy your model to ML Engine
 ```
 gcloud ml-engine models create flowers
-gcloud ml-engine versions create VERSION --model=flowers --origin=ORIGIN
+gcloud ml-engine versions create v1 --model=flowers --origin=gs://gdg-ml-at-scale/model/1516898482/
 ```
 To test the deployed model:
 ```
