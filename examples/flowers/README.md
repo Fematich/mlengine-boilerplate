@@ -1,10 +1,14 @@
 MLEngine-Boilerplate
 ====================
 
+This example adapted the boilerplate code to work for [flower classification](https://github.com/GoogleCloudPlatform/cloudml-samples/tree/master/flowers)
+
 This repository is designed to quickly get you started with new Machine Learning projects on Google Cloud Platform.
 Slides: https://bit.ly/mlwithgcp
 
 ### Functionalities
+
+The project is still under development, current functionalities:
 - preprocessing pipeline (with Apache Beam) that runs on Cloud Dataflow or locally
 - model training (with Tensorflow) that runs locally or on ML Engine
 - ready to deploy saved models to deploy on ML Engine
@@ -23,7 +27,7 @@ You need to complete the following parts to run the code:
 - preprocess.py pipeline with your own custom preprocess steps
 - model.py with your own model function according to the specification
 - config.py with your project-id and databuckets
-- upload data to your buckets, you can upload data/test.csv to test this code
+- upload the data folder into your bucket
 - (optionally) task.py with more custom training steps
 
 ## Preprocess
@@ -36,7 +40,7 @@ python preprocess.py --cloud
 
 To improve efficiency you can also run the code locally on a sample of the dataset:
 ```
-python trainer/preprocess.py
+python preprocess.py
 ```
 
 ## Training Tensorflow model
@@ -56,12 +60,12 @@ gcloud ml-engine local train --package-path trainer \
 ## Deploy your trained model
 To deploy your model to ML Engine
 ```
-gcloud ml-engine models create MODEL_NAME
-gcloud ml-engine versions create VERSION --model=MODEL_NAME --origin=ORIGIN
+gcloud ml-engine models create flowers
+gcloud ml-engine versions create VERSION --model=flowers --origin=ORIGIN
 ```
 To test the deployed model:
 ```
-python predictions/predict.py
+python predict.py
 ```
 
 # ToDos
