@@ -1,4 +1,4 @@
-apache-beam[gcp]==2.2.0
-tensorflow==1.4.0
+apache-beam[gcp]==2.3.0
+tensorflow==1.6.0
 tensorflow-transform==0.4.0
 google-api-python-client==1.6.4

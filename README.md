@@ -36,7 +36,7 @@ python preprocess.py --cloud
 
 To improve efficiency you can also run the code locally on a sample of the dataset:
 ```
-python trainer/preprocess.py
+python preprocess.py
 ```
 
 ## Training Tensorflow model
