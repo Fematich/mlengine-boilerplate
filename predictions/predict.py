@@ -37,7 +37,7 @@ def get_predictions(project, model, instances, version=None):
 
 if __name__ == "__main__":
     predictions = get_predictions(
-        project="ml6-sandbox",
+        project="<project_id>",
         model="mlengine_boilerplate",
         instances=[
             {

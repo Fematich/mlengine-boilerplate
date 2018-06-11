@@ -68,7 +68,7 @@ def build_model_fn():
         if mode == tf.estimator.ModeKeys.TRAIN:
             train_op = tf.contrib.layers.optimize_loss(
                 loss=loss_op,
-                global_step=tf.contrib.framework.get_global_step(),
+                global_step=tf.train.framework.get_global_step(),
                 learning_rate=params['learning_rate'],
                 optimizer='Adagrad',
                 summaries=[

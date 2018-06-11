@@ -7,7 +7,7 @@ setup(
     version='0.1',
     author='Matthias Feys',
     author_email='matthiasfeys@gmail.com',
-    install_requires=['tensorflow==1.4.0','tensorflow-transform==0.4.0', 'Pillow==5.0.0', 'numpy==1.14.0'],
+    install_requires=['tensorflow==1.8.0','tensorflow-transform==0.6.0', 'Pillow==5.0.0', 'numpy==1.14.0'],
     packages=find_packages(),
     scripts=[],
     package_data={

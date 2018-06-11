@@ -1,6 +1,6 @@
 #!/usr/bin/python
-PROJECT_ID = 'project-id'
-BUCKET = 'gs://bucket/'
+PROJECT_ID = '<project-id>'
+BUCKET = 'gs://<gcs_bucket>'
 DATA_DIR = BUCKET + 'data/'
 TFRECORD_DIR = BUCKET + 'tfrecords/'
 MODEL_DIR = BUCKET + 'model/'

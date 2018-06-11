@@ -44,7 +44,7 @@ You can submit a ML Engine training job with:
 ```
 gcloud ml-engine jobs submit training my_job \
                 --module-name trainer.task \
-                --staging-bucket gs://<stating_bucket> \
+                --staging-bucket gs://<staging_bucket> \
                 --package-path trainer
 ```
 Testing it locally:
