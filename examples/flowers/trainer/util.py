@@ -2,6 +2,7 @@
 import os
 import io
 import logging
+import multiprocessing
 
 import numpy as np
 from PIL import Image
