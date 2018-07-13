@@ -1,0 +1,3 @@
+[submodule "examples/tftransform-demo"]
+	path = examples/tftransform-demo
+	url = https://github.com/Fematich/tftransform-demo
