@@ -41,7 +41,7 @@ def build_input_fn(mode=tf.estimator.ModeKeys.TRAIN, multi_threading=True, num_e
                 'feat': tf.FixedLenFeature([FEAT_LEN], tf.float32),
             }
         dataset = data.TFRecordDataset(filenames=file_names, compression_type = 'GZIP')
-        dataset = dataset.map(lambda tf_example: printout(tf_example))
+        # dataset = dataset.map(lambda tf_example: printout(tf_example))
         dataset = dataset.map(lambda tf_example:  tf.parse_example(serialized=[tf_example], features=feature_spec),
                               num_parallel_calls=num_threads)
 
