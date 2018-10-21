@@ -46,6 +46,7 @@ gcloud ml-engine jobs submit training my_job \
                 --module-name trainer.task \
                 --staging-bucket gs://<staging_bucket> \
                 --package-path trainer
+                --runtime-version 1.10
 ```
 Testing it locally:
 ```
@@ -56,12 +57,12 @@ gcloud ml-engine local train --package-path trainer \
 ## Deploy your trained model
 To deploy your model to ML Engine
 ```
-gcloud ml-engine models create MODEL_NAME
+gcloud ml-engine models create MODEL_NAME --regions=REGION
 gcloud ml-engine versions create VERSION --model=MODEL_NAME --origin=ORIGIN
 ```
 To test the deployed model:
 ```
-python predictions/predict.py
+gcloud ml-engine predict --model MODEL_NAME --version VERSION --json-instances instances.json
 ```
 
 # ToDos
