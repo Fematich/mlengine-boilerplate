@@ -60,7 +60,11 @@ To deploy your model to ML Engine
 gcloud ml-engine models create MODEL_NAME --regions=REGION
 gcloud ml-engine versions create VERSION --model=MODEL_NAME --origin=ORIGIN
 ```
-To test the deployed model:
+To test the deployed model using python:
+```
+python predictions/predict.py
+```
+To test the deployed model with gcloud ml-engine predict command:
 ```
 gcloud ml-engine predict --model MODEL_NAME --version VERSION --json-instances instances.json
 ```
