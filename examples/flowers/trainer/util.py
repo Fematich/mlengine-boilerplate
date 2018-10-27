@@ -45,11 +45,11 @@ def build_input_fn(mode=tf.estimator.ModeKeys.TRAIN, multi_threading=True, num_e
         file_names = tf.matching_files(data_dir)
         feature_spec = {
                 'id': tf.FixedLenFeature([], tf.string),
-                'label': tf.FixedLenFeature([], tf.float32),
+                'label': tf.FixedLenFeature([NUM_LABELS], tf.float32),
                 'feat': tf.FixedLenFeature([FEAT_LEN], tf.float32),
             }
         dataset = data.TFRecordDataset(filenames=file_names, compression_type = 'GZIP')
-        dataset = dataset.map(lambda tf_example: printout(tf_example))
+        # dataset = dataset.map(lambda tf_example: printout(tf_example))
         dataset = dataset.map(lambda tf_example:  tf.parse_example(serialized=[tf_example], features=feature_spec),
                               num_parallel_calls=num_threads)
 

@@ -1,9 +1,10 @@
 #!/usr/bin/python
 PROJECT_ID = '<your-project>'
+BUCKET_NAME = '<your-bucket>'
 
-DATA_DIR = 'gs://<your-bucket>/data/'
-TFRECORD_DIR = 'gs://<your-bucket>/tfrecords-all/'
-MODEL_DIR = 'gs://<your-bucket>/model/'
+DATA_DIR = 'gs://{}/data/'.format(BUCKET_NAME)
+TFRECORD_DIR = 'gs://{}/tfrecords-all/'.format(BUCKET_NAME)
+MODEL_DIR = 'gs://{}/model/'.format(BUCKET_NAME)
 MODEL_NAME = 'flowers'
 WIDTH = 50
 HEIGHT = 50

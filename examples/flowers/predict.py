@@ -7,6 +7,7 @@ import io
 import numpy as np
 import sys
 from trainer.util import read_image
+from trainer.config import PROJECT_ID, MODEL_NAME
 
 
 def get_predictions(project, model, instances, version=None):
@@ -45,8 +46,8 @@ if __name__ == "__main__":
     feat = read_image("gs://cloud-ml-data/img/flower_photos/dandelion/2473862606_291ae74885.jpg")
 
     predictions = get_predictions(
-        project="ml6-sandbox",
-        model="flowers",
+        project=PROJECT_ID,
+        model=MODEL_NAME,
         instances=[
             {
                 'id': "test",

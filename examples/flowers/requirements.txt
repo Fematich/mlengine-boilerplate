@@ -1,7 +1,7 @@
 google-api-python-client==1.6.4
 numpy==1.14.0
-apache-beam[gcp]==2.4.0
-tensorflow==1.8.0
-tensorflow-transform==0.6.0
+apache-beam[gcp]==2.6.0
+tensorflow==1.10.0
+tensorflow-transform==0.9.0
 Pillow==5.0.0
 six==1.10.0
